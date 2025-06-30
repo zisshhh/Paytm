@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { AccountModel, UserModel } from "../db";
 import { z } from "zod";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import { authMiddleware } from "../middleware";
 dotenv.config();
 const JWT_SECRET = process.env.JWT_PASSWORD as string
