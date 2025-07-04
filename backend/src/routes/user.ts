@@ -121,8 +121,8 @@ userRouter.put("/", authMiddleware, async (req, res) => {
 
     try {
         const updatedUser = await UserModel.updateOne(
-            { _id: (req as any).userId },      
-            { $set: parsed.data }              
+            { _id: (req as any).userId },
+            { $set: parsed.data }
         );
 
         res.json({
@@ -130,11 +130,32 @@ userRouter.put("/", authMiddleware, async (req, res) => {
             updatedUser
         });
     } catch (e) {
-        console.error("Update error:", e);
         res.status(500).json({
             message: "Something went wrong during update."
         });
     }
 })
+
+userRouter.get("/bulk", async (req, res) => {
+    const filter = req.query.filter || "";
+
+    const users = await UserModel.find({
+        $or: [
+            { username: { $regex: filter, $options: "i" } },
+            { firstName: { $regex: filter, $options: "i"}},
+            { lastName: { $regex: filter, $options: "i"}}
+        ]
+    })
+
+    res.json({
+        user: users.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
+    })
+})
+
 
 export default userRouter;

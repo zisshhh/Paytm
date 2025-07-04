@@ -6,7 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountModel = exports.UserModel = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const mongoose_2 = require("mongoose");
-mongoose_1.default.connect("mongodb+srv://zisshhh:T5DjA6oZ87VdH72I@cluster0.4gkrk.mongodb.net/paytm");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const MONGO_URL = process.env.MONGO_URL;
+mongoose_1.default.connect(MONGO_URL);
 const userSchema = new mongoose_2.Schema({
     username: String,
     password: String,

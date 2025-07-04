@@ -10,7 +10,7 @@ dotenv_1.default.config();
 const JWT_SECRET = process.env.JWT_PASSWORD;
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers["authorization"];
-    //@ts-ignore
+    // @ts-ignore
     const token = authHeader.split(' ')[1];
     if (!token) {
         res.status(411).json({
@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
     }
     try {
         const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
-        //@ts-ignore //TODO fix this
+        // @ts-ignore //TODO fix this
         req.userId = decoded.userId;
         next();
     }

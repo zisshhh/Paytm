@@ -64,7 +64,10 @@ userRouter.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.json({
             message: "User created successfully!",
             token: token,
-            balance: balance
+            balance: balance,
+            user: {
+                name: user.firstName,
+            }
         });
     }
     catch (error) {
@@ -109,9 +112,6 @@ const updateBody = zod_1.z.object({
     lastName: zod_1.z.string().optional()
 });
 userRouter.put("/", middleware_1.authMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const user = await UserModel.findOne({
-    //     username: req.body.username
-    // })
     const parsed = updateBody.safeParse(req.body);
     if (!parsed.success) {
         res.status(411).json({
@@ -119,19 +119,34 @@ userRouter.put("/", middleware_1.authMiddleware, (req, res) => __awaiter(void 0,
         });
     }
     try {
-        const updatedUser = yield db_1.UserModel.updateOne({ _id: req.userId }, // filter by user ID from token
-        { $set: parsed.data } // only update passed fields
-        );
+        const updatedUser = yield db_1.UserModel.updateOne({ _id: req.userId }, { $set: parsed.data });
         res.json({
             message: "Updated successfully!",
             updatedUser
         });
     }
     catch (e) {
-        console.error("Update error:", e);
         res.status(500).json({
             message: "Something went wrong during update."
         });
     }
+}));
+userRouter.get("/bulk", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const filter = req.query.filter || "";
+    const users = yield db_1.UserModel.find({
+        $or: [
+            { username: { $regex: filter, $options: "i" } },
+            { firstName: { $regex: filter, $options: "i" } },
+            { lastName: { $regex: filter, $options: "i" } }
+        ]
+    });
+    res.json({
+        user: users.map(user => ({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id: user._id
+        }))
+    });
 }));
 exports.default = userRouter;

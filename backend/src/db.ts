@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
+import dotenv from "dotenv";
 
-mongoose.connect("mongodb+srv://zisshhh:T5DjA6oZ87VdH72I@cluster0.4gkrk.mongodb.net/paytm");
+dotenv.config();
+const MONGO_URL = process.env.MONGO_URL as string
+
+mongoose.connect(MONGO_URL);
 
 const userSchema = new Schema({
     username: String,

@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_PASSWORD as string
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers["authorization"];
     
-    //@ts-ignore
+    // @ts-ignore
     const token = authHeader.split(' ')[1];
 
     if (!token) {
@@ -18,7 +18,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET)
-        //@ts-ignore //TODO fix this
+        // @ts-ignore //TODO fix this
         req.userId = decoded.userId;
         next();
     } catch (e) {
