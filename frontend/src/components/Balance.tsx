@@ -1,5 +1,5 @@
 interface balanceProp {
-    value: string
+    value: any
 }
 
 export const Balance = ({ value }: balanceProp) => {
