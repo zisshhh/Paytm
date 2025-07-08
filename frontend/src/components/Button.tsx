@@ -1,6 +1,6 @@
 interface buttonProps {
     lable: string,
-    onClick?: () => void
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const Button = ({ lable, onClick }: buttonProps) => {

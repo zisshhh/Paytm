@@ -11,10 +11,10 @@ const JWT_SECRET = process.env.JWT_PASSWORD as string
 const userRouter = Router();
 
 const signupBody = z.object({
-    username: z.string().email(),
-    password: z.string().min(5).max(10),
     firstName: z.string(),
-    lastName: z.string()
+    lastName: z.string(),
+    username: z.string().email(),
+    password: z.string().min(5).max(10)
 })
 
 userRouter.post("/signup", async (req: Request, res: Response) => {
@@ -22,9 +22,11 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
         const parsed = signupBody.safeParse(req.body);
 
         if (!parsed.success) {
+                    console.log("Received signup:", req.body);
+
             res.status(411).json({
-                message: "email already taken or incorrect credentials",
-                error: parsed.error
+                message: "Zod validation failed",
+                error: parsed.error.format()
             });
             return
         };
@@ -35,7 +37,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
 
         if (existingUser) {
             res.status(411).json({
-                message: "User alredy exist!"
+                message: "User already exists with this email"
             })
         };
 
@@ -142,8 +144,8 @@ userRouter.get("/bulk", async (req, res) => {
     const users = await UserModel.find({
         $or: [
             { username: { $regex: filter, $options: "i" } },
-            { firstName: { $regex: filter, $options: "i"}},
-            { lastName: { $regex: filter, $options: "i"}}
+            { firstName: { $regex: filter, $options: "i" } },
+            { lastName: { $regex: filter, $options: "i" } }
         ]
     })
 
