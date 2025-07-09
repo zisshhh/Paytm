@@ -1,7 +1,7 @@
 interface inputProp {
     lable: string,
     placeholder: string
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const InputBox = ({ lable, placeholder, onChange }: inputProp) => {

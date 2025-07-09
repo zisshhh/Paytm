@@ -8,4 +8,9 @@ app.use(express.json());
 
 app.use("/api/v1", rootRouter);
 
+app.get("/", (req, res) => {
+  res.redirect("/api/v1/user/signup");
+});
+
+
 app.listen(3000);
