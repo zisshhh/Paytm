@@ -37,13 +37,12 @@ export const Signup = () => {
                 }} lable="Password" placeholder="123random" />
                 <div className="pt-4">
                     <Button onClick={async () => {
-                        const respone = await axios.post(`${import.meta.env.BACKEND_URL}/api/v1/user/signup`, {
+                        const respone = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/signup`, {
                             firstName,
                             lastName,
                             username,
                             password
-                        });     axios.get(`${import.meta.env.VITE_API_URL}/api/something`);
-
+                        });
                         localStorage.setItem("token", respone.data.token)
                         navigate("/dashboard");
                     }} lable="Sign up" />

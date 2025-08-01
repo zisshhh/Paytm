@@ -21,7 +21,7 @@ export const SendMoney = () => {
                 <div className="p-6">
                     <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
-                            <span className="text-2xl text-white">{name[0].toUpperCase()}</span>
+                            <span className="text-2xl text-white">{name?.[0]?.toUpperCase() ?? "?"}</span>
                         </div>
                         <h3>{name}</h3>
                     </div>
@@ -42,7 +42,7 @@ export const SendMoney = () => {
                                 placeholder="Enter amount" />
                         </div>
                         <button onClick={() => {
-                            axios.post(`${import.meta.env.BACKEND_URL}/api/v1/account/transfer`, {
+                            axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/account/transfer`, {
                                 to: id,
                                 amount
                             }, {

@@ -9,7 +9,7 @@ export const Users = () => {
     const [filter, setFilter] = useState("");
 
     useEffect(() => {
-        axios.get(`${import.meta.env.BACKEND_URL}/api/v1/user/bulk?filter=` + filter)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/user/bulk?filter=` + filter)
             .then(response => {
                 setusers(response.data.user)
             })
