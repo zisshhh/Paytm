@@ -6,6 +6,9 @@ import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 export const Signup = () => {
 
@@ -34,12 +37,13 @@ export const Signup = () => {
                 }} lable="Password" placeholder="123random" />
                 <div className="pt-4">
                     <Button onClick={async () => {
-                        const respone = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                        const respone = await axios.post(`${import.meta.env.BACKEND_URL}/api/v1/user/signup`, {
                             firstName,
                             lastName,
                             username,
                             password
-                        });
+                        });     axios.get(`${import.meta.env.VITE_API_URL}/api/something`);
+
                         localStorage.setItem("token", respone.data.token)
                         navigate("/dashboard");
                     }} lable="Sign up" />

@@ -42,7 +42,7 @@ export const SendMoney = () => {
                                 placeholder="Enter amount" />
                         </div>
                         <button onClick={() => {
-                            axios.post("http://localhost:3000/api/v1/account/transfer", {
+                            axios.post(`${import.meta.env.BACKEND_URL}/api/v1/account/transfer`, {
                                 to: id,
                                 amount
                             }, {
